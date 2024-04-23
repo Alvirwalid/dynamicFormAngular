@@ -1,0 +1,74 @@
+<form>
+
+  <button mat-raised-button color="primary" (click)="addRow()">Add</button>
+  <table>
+    <thead>
+
+    <tr>
+      <th scope="col">
+        <input type="checkbox" name="isCheckAll" [(ngModel)]="isCheckAll" (ngModelChange)="checkAll($event)">
+      </th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody [formGroup]="employeeForm">
+
+    <ng-container formArrayName="tableRows" *ngFor="let grop of getFormControl.controls;let  i=index">
+      <tr [formGroupName]="i">
+        <td scope="row">
+          <input type="checkbox" formArrayName="isChecked">
+        </td>
+        <td >
+          <input type="text" formControlName="firstName" placeholder="enter city">
+        </td>
+
+        <td >
+          <input type="text" formControlName="lastName" placeholder="enter city">
+        </td>
+        <td >
+         <select formControlName="status"  (change)="onStatusChange($event,i)">
+           <option value="">Select Status</option>
+           <option value="active">Active</option>
+           <option value="deactive">De-Active</option>
+
+         </select>
+        </td>
+
+        <td>
+          <input type="text" formControlName="city" placeholder="enter city">
+        </td>
+        <td>
+          <input type="text" formControlName="state" placeholder="enter state">
+        </td>
+        <td>
+          <button mat-raised-button color="warn" (click)="removeEmployee(i)">Remove</button>
+        </td>
+
+      </tr>
+
+    </ng-container>
+    <ng-container>
+      <tr>
+        <td colspan="7">
+          <div class="row">
+
+            <div class="col-12 text-center">
+              <button (click)="onSave()" class="btn btn-success"  [disabled]="employeeForm.invalid">Save</button>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+
+    </tbody>
+
+  </table>
+
+
+</form>
